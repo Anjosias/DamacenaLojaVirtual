@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using System.Web;
 using Damacena.LojaVirtual.Web.Models;
 using Damacena.LojaVirtual.Web.HtmlHelpers;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 
 namespace Damacena.LojaVirtual.UnitTest
 {
@@ -28,8 +30,7 @@ namespace Damacena.LojaVirtual.UnitTest
 
         }
     #endregion
-
-
+        
         #region Skip
         [TestMethod]
 
@@ -61,21 +62,22 @@ namespace Damacena.LojaVirtual.UnitTest
             };
    
             Func<int, string> paginaUrl = i => "Pagina" + i;
-         }
+         
 
-        // Act = Ação dos objetos criados no Arrange
-        MvcHtmlString resultado = htmlHelper.PageLinks(Paginacao, paginaUrl);
+            // Act = Ação dos objetos criados no Arrange
+            MvcHtmlString resultado = htmlHelper.PageLinks(paginacao, paginaUrl);
 
         
-        //Assert = Testando
-        Assert assert = new Assert();
+            //Assert = Testando
+               
+            Assert.AreEqual(
+         
+                @"<a class=""btn btn-default"" href=""Pagina1"">1</a>"
+                + @"<a class=""btn btn-default btn-primary selected"" href=""Pagina2"">2</a>"
+                + @"<a class=""btn btn-default"" href=""Pagina3"">3</a>", resultado.ToString()
+            );
         
-        Assert.AreEqual(
-                    @"<a class=""btn btn-default"" href=""Pagina1"">1</a>"
-        + @"<a class=""btn btn-default btn-primary selected"" href=""Pagina2"">2</a>"
-        + @"<a class=""btn btn-default"" href=""Pagina3"">3</a>", resultado.ToString()
-        );
-
+        }
         #endregion
     }
 }
